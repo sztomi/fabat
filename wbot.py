@@ -13,7 +13,7 @@ slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 FLICKR_KEY = os.environ['FLICKR_KEY']
 FLICKR_SECRET = os.environ['FLICKR_SECRET']
 
-flickr = flickrapi.FlickrAPI(FLICKR_KEY, FLICKR_SECRET)
+flickr = flickrapi.FlickrAPI(FLICKR_KEY, FLICKR_SECRET, format='json')
 
 
 def do_wikipedia(query):
@@ -22,7 +22,7 @@ def do_wikipedia(query):
 
 def do_flickr(query):
     search_tags = query.replace(' ;', ',')
-    return flickr.photos.search(tags=search_tags)
+    flickr.photos.search(tags=search_tags)
 
 
 commands = {
