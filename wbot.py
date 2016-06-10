@@ -22,7 +22,7 @@ def do_wikipedia(query):
 
 def do_flickr(query):
     search_tags = query.replace(' ;', ',')
-    flickr.photos.search(tags=search_tags)
+    return flickr.photos.search(tags=search_tags)
 
 
 commands = {
