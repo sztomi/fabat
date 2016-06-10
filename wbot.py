@@ -2,53 +2,50 @@
 import os
 import time
 import wikipedia
+import flickrapi
 from slackclient import SlackClient
 
 BOT_NAME = 'wbot'
-
-# starterbot's ID as an environment variable
-BOT_ID = os.environ.get("SLACK_BOT_ID")
-# constants
+BOT_ID = os.environ.get('SLACK_BOT_ID')
 AT_BOT = "<@" + BOT_ID + ">"
-
 slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
+
+FLICKR_KEY = os.environ['FLICKR_KEY']
+FLICKR_SECRET = os.environ['FLICKR_SECRET']
+
+flickr = flickrapi.FlickrAPI(FLICKR_KEY, FLICKR_SECRET)
 
 
 def do_wikipedia(query):
-    # type: (query -> str)
     return wikipedia.summary(query, sentences=3)
 
 
+def do_flickr(query):
+    search_tags = query.replace(' ;', ',')
+    return flickr.photos.search(tags=search_tags)
+
+
 commands = {
-    'wikipedia': do_wikipedia
+    'wikipedia': do_wikipedia,
+    'flickr': do_flickr
 }
 
 
 def handle_command(command, channel):
     response = "Csillagseggű székely gyerek!"
-
     if ' ' in command:
         cmd, query = command.split(' ', 1)
-
         if cmd in commands:
             response = commands[cmd](query)
-
     slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
 
 def parse_slack_output(slack_rtm_output):
-    """
-        The Slack Real Time Messaging API is an events firehose.
-        this parsing function returns None unless a message is
-        directed at the Bot, based on its ID.
-    """
     output_list = slack_rtm_output
     if output_list and len(output_list) > 0:
         for output in output_list:
-            print(output_list)
             if output and 'text' in output and AT_BOT in output['text']:
-                # return text after the @ mention, whitespace removed
                 return output['text'].split(AT_BOT)[1].strip().lower(), \
                        output['channel']
     return None, None
