@@ -3,6 +3,7 @@ import os
 import random
 import time
 
+import cleverbot3
 import flickrapi
 import wikipedia
 from slackclient import SlackClient
@@ -14,8 +15,9 @@ slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 
 FLICKR_KEY = os.environ['FLICKR_KEY']
 FLICKR_SECRET = os.environ['FLICKR_SECRET']
-
 flickr = flickrapi.FlickrAPI(FLICKR_KEY, FLICKR_SECRET, format='parsed-json')
+
+cleverbot = cleverbot3.Cleverbot()
 
 
 def do_wikipedia(query):
@@ -29,6 +31,8 @@ def do_flickr(query):
     return URL_TMPL.format(owner=result['owner'], photo_id=result['id'])
 
 
+def do_cleverbot(query):
+    return cleverbot.ask(query)
 
 commands = {
     'wikipedia': do_wikipedia,
@@ -42,6 +46,8 @@ def handle_command(command, channel):
         cmd, query = command.split(' ', 1)
         if cmd in commands:
             response = commands[cmd](query)
+        else:
+            response = do_cleverbot(query)
     slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
