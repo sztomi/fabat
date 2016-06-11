@@ -1,1 +1,1 @@
-from Dispatcher import Dispatcher
+__all__ = ['Dispatcher']

@@ -1,4 +1,1 @@
-from Flickr import Flickr
-from HandlerBase import HandlerBase
-
-from Wikipedia import Wikipedia
+__all__ = ['HandlerBase', 'Flickr', 'Wikipedia']
