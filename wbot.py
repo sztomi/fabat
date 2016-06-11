@@ -27,12 +27,14 @@ def do_wikipedia(query):
 def do_flickr(query):
     URL_TMPL = 'http://www.flickr.com/{owner}/{photo_id}/'
     search_tags = query.replace(' ;', ',')
-    result = random.choice(flickr.photos.search(tags=search_tags)['photos']['photo'])
-    return URL_TMPL.format(owner=result['owner'], photo_id=result['id'])
+    result = random.choice(flickr.photos.search(tags=search_tags, extras='url_o')['photos']['photo'])
+    # return URL_TMPL.format(owner=result['owner'], photo_id=result['id'])
+    return result['url_o']
 
 
 def do_cleverbot(query):
     return cleverbot.ask(query)
+
 
 commands = {
     'wikipedia': do_wikipedia,
