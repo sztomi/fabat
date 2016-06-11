@@ -1,3 +1,4 @@
-__all__ = ['Dispatcher']
+__all__ = ['Dispatcher', 'RestClient']
 
 from .Dispatcher import Dispatcher
+from .RestClient import RestClient

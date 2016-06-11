@@ -23,7 +23,7 @@ class Dispatcher(object):
         elif cmd in self._handlers:
             return self._handlers[cmd].execute(params[0] if len(params) > 0 else '')
         else:
-            return self.error_text
+            return self._handlers['cleverbot'].execute(query)
 
     def register_handler(self, handler_class):
         """

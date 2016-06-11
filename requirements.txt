@@ -1,4 +1,4 @@
 slackclient==1.0.0
 wikipedia==1.4.0
 flickrapi==2.1.2
-cleverbot3==0.1.2
+requests==2.10.0
