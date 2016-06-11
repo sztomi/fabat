@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 import json
 from urllib.parse import urljoin
 
