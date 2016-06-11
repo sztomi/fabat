@@ -30,7 +30,7 @@ class Dispatcher(object):
         :param handler_class: The class of the handler.
         :return:
         """
-        self._handlers.append(handler_class.__name__, handler_class)
+        self._handlers[handler_class.__name__] = handler_class()
 
     @property
     def error_text(self):
