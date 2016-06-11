@@ -1,56 +1,24 @@
 # -*- coding: utf8 -*-
 import os
-import random
 import time
 
-import cleverbot3
-import flickrapi
-import wikipedia
 from slackclient import SlackClient
+
+from wbot import Dispatcher
+from wbot.handlers import Flickr, Wikipedia
 
 BOT_NAME = 'wbot'
 BOT_ID = os.environ.get('SLACK_BOT_ID')
 AT_BOT = "<@" + BOT_ID + ">"
 slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 
-FLICKR_KEY = os.environ['FLICKR_KEY']
-FLICKR_SECRET = os.environ['FLICKR_SECRET']
-flickr = flickrapi.FlickrAPI(FLICKR_KEY, FLICKR_SECRET, format='parsed-json')
-
-cleverbot = cleverbot3.Cleverbot()
-
-
-def do_wikipedia(query):
-    return wikipedia.summary(query, sentences=3)
-
-
-def do_flickr(query):
-    search_tags = query.replace(' ;', ',')
-    result = random.choice(
-        flickr.photos.search(
-            tags=search_tags,
-            extras='url_m')['photos']['photo'])
-    return result['url_m']
-
-
-def do_cleverbot(query):
-    return cleverbot.ask(query)
-
-
-commands = {
-    'wikipedia': do_wikipedia,
-    'flickr': do_flickr
-}
+dispatcher = Dispatcher()
+dispatcher.register_handler(Flickr)
+dispatcher.register_handler(Wikipedia)
 
 
 def handle_command(command, channel):
-    response = "Csillagseggű székely gyerek!"
-    if ' ' in command:
-        cmd, query = command.split(' ', 1)
-        if cmd in commands:
-            response = commands[cmd](query)
-        else:
-            response = do_cleverbot(query)
+    response = dispatcher.get_response(command)
     slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
