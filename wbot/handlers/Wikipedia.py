@@ -10,4 +10,4 @@ class Wikipedia(HandlerBase):
 
     @property
     def help_text(self):
-        return "*wikipedia* [query]: Get wikipedia summary.\n"
+        return "Gets a wikipedia summary."

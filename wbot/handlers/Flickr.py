@@ -24,4 +24,4 @@ class Flickr(HandlerBase):
 
     @property
     def help_text(self):
-        return "*flickr* [query]: Gets a random picture from flickr that contains the given tags"
+        return "Gets a random picture from flickr that contains the given tags"

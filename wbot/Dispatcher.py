@@ -16,11 +16,12 @@ class Dispatcher(object):
         be the command, the rest is the parameter(s).
         :return: The result of the command or error_text.
         """
-        cmd, params = query.split(' ', 1)
+        cmd, *params = query.split(' ', 1)
+        cmd = cmd.lower()
         if cmd in self.HELP_QUERY:
             return self.get_help()
         elif cmd in self._handlers:
-            return self._handlers[cmd].execute(params)
+            return self._handlers[cmd].execute(params[0] if len(params) > 0 else '')
         else:
             return self.error_text
 
@@ -30,7 +31,7 @@ class Dispatcher(object):
         :param handler_class: The class of the handler.
         :return:
         """
-        self._handlers[handler_class.__name__] = handler_class()
+        self._handlers[handler_class.__name__.lower()] = handler_class()
 
     @property
     def error_text(self):
@@ -41,5 +42,6 @@ class Dispatcher(object):
         Calls the police.
         :return: The concatenated help strings from all handlers.
         """
-        return ''.join([handler.help_text
-                        for _, handler in self._handlers])
+        return ''.join(['*{}*: '.format(name) + handler.help_text + "\n"
+                        for name, handler
+                        in iter(sorted(self._handlers.items()))])
