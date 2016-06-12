@@ -1,0 +1,7 @@
+Minden {fonev} egy {jelzo} {fonevvel} kezdődik.
+Egy {fonev} nem {fonev}, hanem {jelzo} {fonev} és {jelzo} {fonev} {foneve}.
+{jelzo} {fonevbol} {ige_alanyi_e3} a {legjelzo} {fonev}.
+Ne {ige_felszolito_e2}, hagyd, hogy {ige_felszolito_e3} Téged.
+A {jelzo} {fonev} ellenére is mindenki csak egyet akar: {fonevi_igenev}.
+Azt hitted, hogy az életed {jelzo}? Nem. Nem volt az. Az a {jelzo} {fonev} teszi azzá.
+Nem kell {fonevi_igenev} a {fonevvel} ahhoz, hogy {jelzo} lehess. Elég {fonevi_igenev}.

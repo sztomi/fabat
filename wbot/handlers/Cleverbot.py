@@ -11,6 +11,7 @@ class Cleverbot(HandlerBase):
     _URL = r'https://cleverbot.io/1.0/'
 
     def __init__(self):
+        super().__init__()
         self._api = RestClient(self._URL, 'create', 'ask')
         self._nick = self._api.create(
             user=self._CLEVERBOT_API_USER,

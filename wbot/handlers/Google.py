@@ -12,6 +12,7 @@ class Google(HandlerBase):
     _GOOGLE_CSE_CX = os.environ['GOOGLE_CSE_CX']
 
     def __init__(self):
+        super().__init__()
         self._api = build('customsearch', 'v1', developerKey=self._GOOGLE_CSE_KEY)
 
     def execute(self, param):

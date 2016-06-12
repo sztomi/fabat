@@ -5,7 +5,7 @@ import time
 from slackclient import SlackClient
 
 from wbot import Dispatcher
-from wbot.handlers import Flickr, Wikipedia, Cleverbot, Google
+from wbot.handlers import Flickr, Wikipedia, Cleverbot, Google, Oravecz
 
 BOT_NAME = 'wbot'
 BOT_ID = os.environ.get('SLACK_BOT_ID')
@@ -17,6 +17,7 @@ dispatcher.register_handler(Flickr)
 dispatcher.register_handler(Wikipedia)
 dispatcher.register_handler(Cleverbot)
 dispatcher.register_handler(Google)
+dispatcher.register_handler(Oravecz)
 
 
 def handle_command(command, channel):
